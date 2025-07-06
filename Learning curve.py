@@ -5,9 +5,10 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import xgboost as xgb
 
+# Set global font to Arial
 plt.rcParams['font.family'] = 'Arial'
-plt.rcParams['mathtext.fontset'] = 'custom'
-plt.rcParams['mathtext.it'] = 'Arial:italic'
+plt.rcParams['mathtext.fontset'] = 'custom'  # Ensure math mode uses Arial
+plt.rcParams['mathtext.it'] = 'Arial:italic'  # Set italic math font
 
 data = pd.read_excel('dataset.xlsx', sheet_name='Sheet2', header=None)
 
@@ -57,6 +58,7 @@ for train_size in train_sizes:
 
 fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
+# RMSE plot
 axes[0, 0].plot(train_sizes, train_rmse_list, label='Train RMSE (CV)', marker='o', color='blue')
 axes[0, 0].plot(train_sizes, test_rmse_list, label='Test RMSE', marker='o', color='red')
 axes[0, 0].set_xlabel('Training Size')
@@ -65,6 +67,7 @@ axes[0, 0].set_title('Learning Curve: $\it{RMSE}$')
 axes[0, 0].legend()
 axes[0, 0].grid(True)
 
+# R² plot
 axes[0, 1].plot(train_sizes, train_r2_list, label='Train R²', marker='o', color='blue')
 axes[0, 1].plot(train_sizes, test_r2_list, label='Test R²', marker='o', color='red')
 axes[0, 1].set_xlabel('Training Size')
@@ -73,6 +76,7 @@ axes[0, 1].set_title('Learning Curve: $\it{R²}$')
 axes[0, 1].legend()
 axes[0, 1].grid(True)
 
+# MAE plot
 axes[1, 0].plot(train_sizes, train_mae_list, label='Train MAE', marker='o', color='blue')
 axes[1, 0].plot(train_sizes, test_mae_list, label='Test MAE', marker='o', color='red')
 axes[1, 0].set_xlabel('Training Size')
@@ -81,6 +85,7 @@ axes[1, 0].set_title('Learning Curve: $\it{MAE}$')
 axes[1, 0].legend()
 axes[1, 0].grid(True)
 
+# SEP plot
 axes[1, 1].plot(train_sizes, train_sep_list, label='Train SEP', marker='o', color='blue')
 axes[1, 1].plot(train_sizes, test_sep_list, label='Test SEP', marker='o', color='red')
 axes[1, 1].set_xlabel('Training Size')
