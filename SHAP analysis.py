@@ -9,6 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+plt.rcParams['font.family'] = 'Arial'
+
 file_path = "dataset.xlsx"
 try:
     df = pd.read_excel(file_path, sheet_name="Sheet1")
@@ -92,7 +94,9 @@ image_files = []
 
 plt.figure(figsize=(10, 6))
 shap.plots._waterfall.waterfall_legacy(expected_value, shap_values_all[0],
-                                       feature_names=X.columns, max_display=10)
+                                    feature_names=X.columns, max_display=10)
+ax = plt.gca()
+ax.yaxis.label.set_style('italic')
 plt.tight_layout()
 waterfall_path = 'shap_waterfall_all.png'
 plt.savefig(waterfall_path)
@@ -101,6 +105,10 @@ image_files.append(waterfall_path)
 
 plt.figure(figsize=(10, 6))
 shap.summary_plot(shap_values_all, X_all_df, feature_names=X.columns, show=False)
+
+ax = plt.gca()
+for label in ax.get_yticklabels():
+    label.set_style('italic')
 plt.tight_layout()
 summary_path = 'shap_summary_all.png'
 plt.savefig(summary_path)
@@ -110,7 +118,10 @@ image_files.append(summary_path)
 if len(X.columns) > 0:
     plt.figure(figsize=(10, 6))
     shap.dependence_plot(feature_name, shap_values_all, X_all_df,
-                         feature_names=X.columns, show=False)
+                        feature_names=X.columns, show=False)
+
+    ax = plt.gca()
+    ax.yaxis.label.set_style('italic')
     plt.tight_layout()
     dependence_path = 'shap_dependence_all.png'
     plt.savefig(dependence_path)
