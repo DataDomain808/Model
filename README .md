@@ -5,13 +5,13 @@
 
 This repository consists of 1 excel file and 13 python scripts: 
 
-1. excel file 
+1. excel file
     Sheet1: dataset used to train the model for subsequent analysis 
     Sheet2: dataset used to construct the learning curves 
     Sheet3: dataset used for the uncommon solvent prediction 
     Simple: dataset with SMR_VSA1 and Chi0 molecular descriptors only
 
-2. python script 
+2. python script
     SVM model.py: constructed support vector machine model
     KNN model.py: constructed K-nearest neighbor model
     DT model.py: constructed decision trees model
