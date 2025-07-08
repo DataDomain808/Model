@@ -22,24 +22,15 @@ def extract_descriptors_for_all_molecules(smiles_list):
     return np.array(descriptor_data)
 
 
-def get_similar_descriptors(smiles_list, percent=5):
-
+def get_similar_descriptors(smiles_list, percent=1.5):
     descriptor_matrix = extract_descriptors_for_all_molecules(smiles_list)
-
-
     similarity_matrix = cosine_similarity(descriptor_matrix.T)
-
-
     mean_similarities = np.mean(similarity_matrix, axis=0)
 
-
     total_descriptors = len(Descriptors.descList)
-    top_n = int(np.ceil(total_descriptors * percent / 100))
-
+    top_n = int(total_descriptors * percent / 100)  # Removed np.ceil
 
     top_n_indices = np.argsort(mean_similarities)[::-1][:top_n]
-
-
     top_n_descriptors = [(list(Descriptors.descList)[i][0], mean_similarities[i]) for i in top_n_indices]
 
     return top_n_descriptors
@@ -78,8 +69,8 @@ smiles_list = [
     "CCCC1=NC2=C(N1CC3=CC=C(C=C3)C4=CC=CC=C4C(=O)O)C=C(C=C2C)C5=NC6=CC=CC=C6N5C",
 ]
 
-top_similar_descriptors = get_similar_descriptors(smiles_list, percent=1)
+top_similar_descriptors = get_similar_descriptors(smiles_list, percent=1.5)
 
-print("Top similar descriptors (1% of total descriptors):")
+print("Top similar descriptors (1.5% of total descriptors):")
 for descriptor, similarity in top_similar_descriptors:
     print(f"{descriptor}: {similarity}")
