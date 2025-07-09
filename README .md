@@ -1,7 +1,7 @@
 # Solubility prediction of BCS class II drugs through combining machine learning and molecular descriptor
 
 
-> ![TOC](https://i.postimg.cc/50PYv03z/toc.png)
+> ![TOC](https://i.postimg.cc/HLL5XYpX/toc.png)
 
 This repository consists of 1 excel file and 13 python scripts: 
 
