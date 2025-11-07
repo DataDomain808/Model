@@ -35,9 +35,9 @@ X_test_scaled = X_test_scaled.astype(np.float32)
 xgb_regressor = xgb.XGBRegressor(random_state=42)
 
 param_space = {
-    'n_estimators': Integer(20, 200),
-    'max_depth': Integer(3, 10),
-    'learning_rate': Real(0.01, 0.2, prior='log-uniform'),
+    'n_estimators': Integer(100, 1000),
+    'max_depth': Integer(3, 120),
+    'learning_rate': Real(0.01, 0.8, prior='log-uniform'),
     'gamma': Real(0, 1)
 }
 

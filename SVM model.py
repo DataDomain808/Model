@@ -3,10 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import r2_score, mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 from skopt import BayesSearchCV
 from skopt.space import Real, Categorical, Integer
+
+def average_absolute_relative_deviation(y_true, y_pred):
+    """
+    Calculate AARD (Average Absolute Relative Deviation)
+    AARD = (1/n) * Σ|(y_true - y_pred)| / y_true * 100%
+    """
+    mask = y_true != 0
+    if np.sum(mask) == 0:
+        return np.inf
+    relative_errors = np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])
+    return np.mean(relative_errors) * 100
 
 data_Sheet1 = pd.read_excel('dataset.xlsx', sheet_name='Sheet1', header=1)
 
@@ -15,7 +26,6 @@ y = data_Sheet1.iloc[:, -1].values
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
-
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
@@ -45,22 +55,23 @@ print("Best Hyperparameters:", bayes_search.best_params_)
 best_svr_regressor = bayes_search.best_estimator_
 
 y_train_pred = best_svr_regressor.predict(X_train)
-train_rmse = np.sqrt(mean_squared_error(y_train, y_train_pred))
+train_aard = average_absolute_relative_deviation(y_train, y_train_pred)
 train_r2 = r2_score(y_train, y_train_pred)
 train_mae = mean_absolute_error(y_train, y_train_pred)
-train_sep = np.sqrt(mean_squared_error(y_train, y_train_pred) / len(y_train))
+train_sep = np.sqrt(np.mean((y_train - y_train_pred) ** 2) / len(y_train))
 
-print("Training Set RMSE:", train_rmse)
+print("Training Set AARD:", train_aard)
 print("Training Set R²:", train_r2)
 print("Training Set MAE:", train_mae)
 print("Training Set SEP:", train_sep)
 
 y_test_pred = best_svr_regressor.predict(X_test)
-test_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
+test_aard = average_absolute_relative_deviation(y_test, y_test_pred)
 test_r2 = r2_score(y_test, y_test_pred)
 test_mae = mean_absolute_error(y_test, y_test_pred)
-test_sep = np.sqrt(mean_squared_error(y_test, y_test_pred) / len(y_test))
-print("Testing Set RMSE:", test_rmse)
+test_sep = np.sqrt(np.mean((y_test - y_test_pred) ** 2) / len(y_test))
+
+print("Testing Set AARD:", test_aard)
 print("Testing Set R²:", test_r2)
 print("Testing Set MAE:", test_mae)
 print("Testing Set SEP:", test_sep)

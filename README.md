@@ -11,7 +11,9 @@ This repository consists of 1 excel file and 13 python scripts:
 
     Sheet2: dataset used to construct the learning curves 
 
-    Sheet3: dataset used for the uncommon solvent prediction 
+    Sheet3: dataset used for the uncommon solvent prediction
+
+    Sheet4: dataset used for multi-feature solubility prediction 
 
     Simple: dataset with SMR_VSA1 and Chi0 molecular descriptors only
 
@@ -41,7 +43,6 @@ This repository consists of 1 excel file and 13 python scripts:
 
     SHAP analysis.py: Shapley Additive Explanations analysis with the XGBoost model
 
-    Feature Importance.py: feature importance analysis with the XGBoost model
 
 ## Installation
 Dependencies: ```scikit-learn==1.5.0```, ```scikit-optimize==0.10.2```, ```xgboost==2.1.4```, ```rdkit=2023.09.5``` 
